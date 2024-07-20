@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Book Section</h1>
+    <button type="submit"><a href="/">Home</a></button>
+    <button type="submit"><a href="/secciones/libros/insertar">Create Book</a></button>
+    <ul>
+        {% for libro in libros %}
+        <li> {{libro[0]}}. {{libro[1]}} - {{libro[3]}} ${{libro[4]}} </li> 
+        <form id="deleteForm">
+            <button type="submit"><a href="/secciones/libros/actualizar/{{libro[0]}}">Update</a></button>
+            <button type="button" onclick="submitDeleteForm({{libro[0]}})">Delete</button>
+        </form>
+        {% endfor %}
+    </ul>
+</body>
+<script>
+    function submitDeleteForm(id) {
+        // Envía una solicitud DELETE usando fetch
+        fetch(`/secciones/libros/eliminar/${id}/submit`, {
+            method: 'DELETE', // Método HTTP DELETE
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = "/secciones/libros"; // Redirige a la página principal si la solicitud fue exitosa
+            } else {
+                alert("Failed to delete item"); // Muestra un mensaje de error si la solicitud falló
+            }
+        });
+    }
+</script>
+</html>

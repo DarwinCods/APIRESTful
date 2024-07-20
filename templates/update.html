@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Seccion de Peliculas</h1>
+    <ul>
+    {% for libro in message %}
+        <li> {{libro}} </li> <a href="form_libros.html">Update</a>
+    {% endfor %}
+    </ul>
+</body>
+</html>

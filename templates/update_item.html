@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Update Item</h2>
+    <form id="updateForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ item.name }}">
+        <button type="button" onclick="submitUpdateForm()">Update</button>
+    </form>
+    <script>
+        function submitUpdateForm() {
+            const form = document.getElementById('updateForm');
+            const formData = new FormData(form);
+            const jsonData = {};
+            formData.forEach((value, key) => jsonData[key] = value);
+            
+            fetch(`/update/{{ item_id }}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jsonData)
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = "/";
+                } else {
+                    alert("Failed to update item");
+                }
+            });
+        }
+    </script>
+{% endblock %}

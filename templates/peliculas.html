@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css"> 
+    <title>Document</title>
+</head>
+<body>
+    <h1>Movie Section</h1>
+    <button type="submit"><a href="/">Home</a></button>
+    <button type="submit"><a href="/secciones/peliculas/insertar">Create Movie</a></button>
+    <ul>
+        {% for pelicula in message %}
+        <li> {{pelicula[0]}}. {{pelicula[1]}} - {{pelicula[3]}} ${{pelicula[4]}} </li> 
+        <form id="deleteForm">
+            <button type="submit"><a href="/secciones/peliculas/actualizar/{{pelicula[0]}}">Update</a></button>
+            <button type="button" onclick="submitDeleteForm({{pelicula[0]}})">Delete</button>
+        </form>
+        {% endfor %}
+    </ul>
+</body>
+<script>
+    function submitDeleteForm(id) {
+        // Envía una solicitud DELETE usando fetch
+        fetch(`/secciones/peliculas/eliminar/${id}/submit`, {
+            method: 'DELETE', // Método HTTP DELETE
+        }).then(response => {
+            if (response.ok) {
+                window.location.href = "/secciones/peliculas"; // Redirige a la página principal si la solicitud fue exitosa
+            } else {
+                alert("Failed to delete item"); // Muestra un mensaje de error si la solicitud falló
+            }
+        });
+    }
+</script>
+</html>
